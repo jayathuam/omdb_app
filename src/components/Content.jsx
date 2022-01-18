@@ -1,29 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "@emotion/styled";
+
 import { MovieList } from "./MovieList";
 import { MovieDetails } from "./MovieDetails";
 import { colors } from "../theme";
-// import PropTypes from "prop-types";
 
 const Wrapper = styled.div`
   display: flex;
   width: 100%;
+  overflow: hidden;
   position: fixed;
-  height: 100%;
-`;
-
-const ResultText = styled.div`
-  color: ${colors.textMain};
-  text-transform: uppercase;
-  font-weight: 500;
-  font-size: 14px;
-  margin: 25px 0px 10px 25px;
 `;
 
 const List = styled.div`
   border-right: 1px solid ${colors.softText};
-  overflow-y: auto;
-  height: calc(100vh - 80px);
+  overflow-y: hidden;
+  width: 350px;
 `;
 
 const Details = styled.div`
@@ -32,21 +24,20 @@ const Details = styled.div`
 `;
 
 const Content = () => {
+  const [selectedMovie, setSelectedMovie] = useState("");
   return (
     <Wrapper>
       <List>
-        <ResultText>582 Results (2001-2004)</ResultText>
-        <MovieList />
+        <MovieList
+          setSelectedMovie={setSelectedMovie}
+          selectedMovie={selectedMovie}
+        />
       </List>
       <Details>
-        <MovieDetails />
+        <MovieDetails selectedMovie={selectedMovie} />
       </Details>
     </Wrapper>
   );
 };
-
-// Content.propTypes = {
-
-// };
 
 export { Content };

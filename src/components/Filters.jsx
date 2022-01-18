@@ -1,6 +1,5 @@
 import React, { useContext } from "react";
 import styled from "@emotion/styled";
-import "react-input-range/lib/css/index.css";
 
 import { FilterContext } from "../contexts/FilterContext";
 import { Radio, YearSelector } from "../shared/components";
@@ -46,7 +45,7 @@ const Filters = ({ ...rest }) => {
         <StyledLabel>Type</StyledLabel>
         <RadioGroup>
           <Radio
-            value="any"
+            value=""
             selected={filters.type}
             text="Any"
             onChange={(value) => onRadioChange(value)}

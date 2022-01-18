@@ -30,9 +30,12 @@ const MoviePoster = styled.img`
   border-radius: 5px;
 `;
 
-const MovieCard = ({ imageUrl, title, year, imdbId, selectedId }) => {
+const MovieCard = ({ imageUrl, title, year, imdbId, selectedId, onClick }) => {
   return (
-    <MovieCardWrapper selected={selectedId === imdbId}>
+    <MovieCardWrapper
+      selected={selectedId === imdbId}
+      onClick={() => onClick(imdbId)}
+    >
       <MoviePoster src={imageUrl} alt={title} />
       <div>
         <MovieTitle>{title}</MovieTitle>
@@ -48,6 +51,7 @@ MovieCard.propTypes = {
   year: PropTypes.string,
   selectedId: PropTypes.string,
   imdbId: PropTypes.string,
+  onClick: PropTypes.func,
 };
 
 export { MovieCard };

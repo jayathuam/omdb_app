@@ -1,50 +1,11 @@
 import React from "react";
-// import PropTypes from "prop-types";
+import PropTypes from "prop-types";
 import styled from "@emotion/styled";
+
+import { getMovieDetails } from "../hooks/getMovieDetails";
+import { Loader } from "../shared/components";
 import { BookmarkIcon } from "../shared/icons";
 import { colors } from "../theme";
-
-const movie = {
-  Title: "Batman v Superman: Dawn of Justice",
-  Year: "2016",
-  Rated: "PG-13",
-  Released: "25 Mar 2016",
-  Runtime: "152 min",
-  Genre: "Action, Adventure, Sci-Fi",
-  Director: "Zack Snyder",
-  Writer: "Chris Terrio, David S. Goyer, Bob Kane",
-  Actors: "Ben Affleck, Henry Cavill, Amy Adams",
-  Plot: "Fearing that the actions of Superman are left unchecked, Batman takes on the Man of Steel, while the world wrestles with what kind of a hero it really needs.",
-  Language: "English",
-  Country: "United States",
-  Awards: "14 wins & 33 nominations",
-  Poster:
-    "https://m.media-amazon.com/images/M/MV5BYThjYzcyYzItNTVjNy00NDk0LTgwMWQtYjMwNmNlNWJhMzMyXkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_SX300.jpg",
-  Ratings: [
-    {
-      Source: "Internet Movie Database",
-      Value: "6.4/10",
-    },
-    {
-      Source: "Rotten Tomatoes",
-      Value: "29%",
-    },
-    {
-      Source: "Metacritic",
-      Value: "44/100",
-    },
-  ],
-  Metascore: "44",
-  imdbRating: "6.4",
-  imdbVotes: "670,863",
-  imdbID: "tt2975590",
-  Type: "movie",
-  DVD: "19 Jul 2016",
-  BoxOffice: "$330,360,194",
-  Production: "N/A",
-  Website: "N/A",
-  Response: "True",
-};
 
 const ImageContainer = styled.div`
   display: flex;
@@ -141,41 +102,72 @@ const RatingName = styled.div`
   font-size: 12px;
 `;
 
-const MovieDetails = () => {
+const StyledLoader = styled(Loader)`
+  margin-top: 25px;
+`;
+
+const MovieListError = styled.div`
+  text-align: center;
+  width: 100%;
+  margin-top: 25px;
+  color: ${colors.error};
+`;
+
+const MovieDetailsEmpty = styled.div`
+  margin-top: 25px;
+  text-align: center;
+`;
+
+const MovieDetails = ({ selectedMovie }) => {
+  const { isLoading, error, data } = getMovieDetails({ id: selectedMovie });
+  console.log(isLoading, error, data);
   return (
     <>
-      <ImageContainer>
-        <Image src={movie.Poster} alt={movie.Title} />
-        <TitleContainer>
-          <SaveButton>
-            <BookmarkIcon width={20} height={20} />
-            Watchlist
-          </SaveButton>
-          <TitleInfoContainer>
-            <Title>{movie.Title}</Title>
-            <InfoContainer>
-              <Rating>{movie.Rated}</Rating>
-              <span>{`${movie.Year}`}</span>
-              <span>{` | ${movie.Genre}`}</span>
-              <span>{` | ${movie.Runtime}`}</span>
-            </InfoContainer>
-            <Cast>{movie.Actors}</Cast>
-          </TitleInfoContainer>
-        </TitleContainer>
-      </ImageContainer>
-      <Plot>{movie.Plot}</Plot>
-      <OtherInfo>
-        {movie.Ratings.map((item) => (
-          <InfoBox key={item.Source}>
-            <div>{item.Value}</div>
-            <RatingName>{item.Source}</RatingName>
-          </InfoBox>
-        ))}
-      </OtherInfo>
+      {isLoading && <StyledLoader isLoading />}
+      {error && (
+        <MovieListError>Error Loading Movie Details....</MovieListError>
+      )}
+      {!data && !isLoading && !error && (
+        <MovieDetailsEmpty>Waiting For Image To Select......</MovieDetailsEmpty>
+      )}
+      {data && (
+        <>
+          <ImageContainer>
+            <Image src={data.Poster} alt={data.Title} />
+            <TitleContainer>
+              <SaveButton>
+                <BookmarkIcon width={20} height={20} />
+                Watchlist
+              </SaveButton>
+              <TitleInfoContainer>
+                <Title>{data.Title}</Title>
+                <InfoContainer>
+                  <Rating>{data.Rated}</Rating>
+                  <span>{`${data.Year}`}</span>
+                  <span>{` | ${data.Genre}`}</span>
+                  <span>{` | ${data.Runtime}`}</span>
+                </InfoContainer>
+                <Cast>{data.Actors}</Cast>
+              </TitleInfoContainer>
+            </TitleContainer>
+          </ImageContainer>
+          <Plot>{data.Plot}</Plot>
+          <OtherInfo>
+            {data.Ratings.map((item) => (
+              <InfoBox key={item.Source}>
+                <div>{item.Value}</div>
+                <RatingName>{item.Source}</RatingName>
+              </InfoBox>
+            ))}
+          </OtherInfo>
+        </>
+      )}
     </>
   );
 };
 
-// MovieDetails.propTypes = {};
+MovieDetails.propTypes = {
+  selectedMovie: PropTypes.string,
+};
 
 export { MovieDetails };
