@@ -27,10 +27,13 @@ const TitleContainer = styled.div`
 const SaveButton = styled.button`
   height: 40px;
   border-radius: 5px;
-  border: 1px solid ${colors.colorBlack};
-  color: ${colors.secondaryMain};
+  border: ${({ isBookmarked }) =>
+    `1px solid ${isBookmarked ? colors.secondaryText : colors.colorBlack}`};
+  color: ${({ isBookmarked }) =>
+    isBookmarked ? colors.secondaryText : colors.secondaryMain};
   font-size: 16px;
-  background: none;
+  background: ${({ isBookmarked }) =>
+    isBookmarked ? colors.softText : "none"};
   cursor: pointer;
   padding: 0 15px;
   display: flex;
@@ -118,9 +121,13 @@ const MovieDetailsEmpty = styled.div`
   text-align: center;
 `;
 
-const MovieDetails = ({ selectedMovie }) => {
+const MovieDetails = ({ selectedMovie, updateWatchList, watchList }) => {
   const { isLoading, error, data } = getMovieDetails({ id: selectedMovie });
-  console.log(isLoading, error, data);
+  const isBookmarked = !!watchList[data?.imdbID];
+  const handleBookmark = (id) => {
+    updateWatchList({ id, value: !isBookmarked });
+  };
+
   return (
     <>
       {isLoading && <StyledLoader isLoading />}
@@ -135,8 +142,17 @@ const MovieDetails = ({ selectedMovie }) => {
           <ImageContainer>
             <Image src={data.Poster} alt={data.Title} />
             <TitleContainer>
-              <SaveButton>
-                <BookmarkIcon width={20} height={20} />
+              <SaveButton
+                onClick={() => handleBookmark(data.imdbID)}
+                isBookmarked={isBookmarked}
+              >
+                <BookmarkIcon
+                  width={20}
+                  height={20}
+                  color={
+                    isBookmarked ? colors.secondaryText : colors.secondaryMain
+                  }
+                />
                 Watchlist
               </SaveButton>
               <TitleInfoContainer>
@@ -168,6 +184,8 @@ const MovieDetails = ({ selectedMovie }) => {
 
 MovieDetails.propTypes = {
   selectedMovie: PropTypes.string,
+  updateWatchList: PropTypes.func,
+  watchList: PropTypes.object,
 };
 
 export { MovieDetails };

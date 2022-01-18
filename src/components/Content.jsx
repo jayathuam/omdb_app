@@ -3,6 +3,7 @@ import styled from "@emotion/styled";
 
 import { MovieList } from "./MovieList";
 import { MovieDetails } from "./MovieDetails";
+import { getData, saveData } from "../utils/localstorage";
 import { colors } from "../theme";
 
 const Wrapper = styled.div`
@@ -25,6 +26,20 @@ const Details = styled.div`
 
 const Content = () => {
   const [selectedMovie, setSelectedMovie] = useState("");
+  const [watchList, setWatchList] = useState(getData("watchList"));
+
+  const updateWatchList = ({ id, value }) => {
+    let newData;
+    if (value) {
+      newData = { ...watchList, ...{ [id]: value } };
+    } else {
+      newData = { ...watchList };
+      delete newData[id];
+    }
+    saveData("watchList", newData);
+    setWatchList(newData);
+  };
+
   return (
     <Wrapper>
       <List>
@@ -34,7 +49,11 @@ const Content = () => {
         />
       </List>
       <Details>
-        <MovieDetails selectedMovie={selectedMovie} />
+        <MovieDetails
+          selectedMovie={selectedMovie}
+          watchList={watchList}
+          updateWatchList={updateWatchList}
+        />
       </Details>
     </Wrapper>
   );
