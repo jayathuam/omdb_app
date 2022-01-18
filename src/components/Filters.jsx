@@ -3,10 +3,22 @@ import styled from "@emotion/styled";
 
 import { FilterContext } from "../contexts/FilterContext";
 import { Radio, YearSelector } from "../shared/components";
+import { breakpoints } from "../theme";
 
 const FilterItemsWrapper = styled.div`
   display: flex;
   gap: 25px;
+
+  @media (max-width: ${breakpoints.tab}) {
+    gap: 40px;
+  }
+
+  @media (max-width: ${breakpoints.mobile}) {
+    flex-direction: column;
+    gap: 25px;
+    margin-top: 40px;
+    margin-bottom: 20px;
+  }
 `;
 
 const StyledLabel = styled.label`

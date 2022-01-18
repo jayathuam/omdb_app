@@ -9,8 +9,6 @@ export const colors = {
 };
 
 export const breakpoints = {
-  xl: "1920px",
-  lg: "1352px",
-  md: "960px",
-  sm: "600px",
+  tab: "996px",
+  mobile: "680px",
 };

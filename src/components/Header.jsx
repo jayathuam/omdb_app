@@ -2,7 +2,7 @@ import React from "react";
 import styled from "@emotion/styled";
 import { Search } from "./Search";
 import { Filters } from "./Filters";
-import { colors } from "../theme";
+import { colors, breakpoints } from "../theme";
 
 const Wrapper = styled.div`
   background-color: ${colors.secondaryMain};
@@ -14,10 +14,22 @@ const Wrapper = styled.div`
   display: flex;
   align-items: center;
   flex-wrap: wrap;
+
+  @media (max-width: ${breakpoints.tab}) {
+    height: 200px;
+  }
+
+  @media (max-width: ${breakpoints.mobile}) {
+    flex-direction: unset;
+    height: 240px;
+  }
 `;
 
 const StyledSearch = styled(Search)`
   flex-grow: 1;
+  @media (max-width: ${breakpoints.tab}) {
+    margin-top: 25px;
+  }
 `;
 
 const Header = () => {

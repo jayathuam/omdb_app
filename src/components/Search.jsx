@@ -4,7 +4,7 @@ import debounce from "lodash.debounce";
 
 import { FilterContext } from "../contexts/FilterContext";
 import { LenseIcon } from "../shared/icons";
-import { colors } from "../theme";
+import { colors, breakpoints } from "../theme";
 
 const SearchWrapper = styled.div`
   display: flex;
@@ -24,6 +24,10 @@ const StyledInput = styled.input`
 
   &:focus {
     outline: none;
+  }
+
+  @media (max-width: ${breakpoints.mobile}) {
+    width: 100%;
   }
 `;
 

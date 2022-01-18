@@ -6,13 +6,21 @@ import { FilterContext } from "../contexts/FilterContext";
 import { getMovieList } from "../hooks/getMovieList";
 import { MovieCard } from "./MovieCard";
 import { Loader } from "../shared/components";
-import { colors } from "../theme";
+import { colors, breakpoints } from "../theme";
 
 const MovieListWrapper = styled.div`
   width: 100%;
   padding-bottom: 50px;
   overflow-y: auto;
   height: calc(100vh - 80px);
+
+  @media (max-width: ${breakpoints.tab}) {
+    height: calc(100vh - 200px);
+  }
+
+  @media (max-width: ${breakpoints.mobile}) {
+    height: calc(100vh - 240px);
+  }
 `;
 
 const MovieListEmpty = styled.div`
@@ -33,6 +41,10 @@ const ResultText = styled.div`
   font-weight: 500;
   font-size: 14px;
   margin: 25px 0px 10px 25px;
+
+  @media (max-width: ${breakpoints.tab}) {
+    margin: 30px 0px 30px 5px;
+  }
 `;
 
 const StyledLoader = styled(Loader)`
@@ -45,7 +57,6 @@ const MovieList = ({ selectedMovie, setSelectedMovie }) => {
 
   const { isLoading, error, data, fetchNextPage, hasNextPage, isFetching } =
     getMovieList({
-      page: 1,
       year: `${min}-${max}`,
       type: filters.type,
       search: filters.search,

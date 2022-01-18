@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import styled from "@emotion/styled";
-import { colors } from "../theme";
+import { colors, breakpoints } from "../theme";
 
 const MovieCardWrapper = styled.div`
   width: 300px;
@@ -12,6 +12,16 @@ const MovieCardWrapper = styled.div`
   border-bottom: 1px solid ${colors.softText};
   background-color: ${({ selected }) =>
     selected ? colors.selectedBackground : "unset"};
+
+  @media (max-width: ${breakpoints.tab}) {
+    width: 170px;
+    padding: 15px;
+    gap: 10px;
+  }
+
+  @media (max-width: ${breakpoints.mobile}) {
+    width: 100%;
+  }
 `;
 
 const MovieTitle = styled.div`

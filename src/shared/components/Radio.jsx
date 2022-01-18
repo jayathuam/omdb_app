@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import styled from "@emotion/styled";
 
-import { colors } from "../../theme";
+import { colors, breakpoints } from "../../theme";
 
 const RadioWrapper = styled.div`
   display: flex;
@@ -36,6 +36,10 @@ const InnerCircle = styled.div`
 const HelpText = styled.div`
   color: ${colors.secondaryText};
   padding-right: 20px;
+
+  @media (max-width: ${breakpoints.mobile}) {
+    padding-right: 10px;
+  }
 `;
 
 const Radio = ({ selected, onChange, text, value, ...rest }) => {

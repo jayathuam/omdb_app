@@ -5,16 +5,34 @@ import styled from "@emotion/styled";
 import { getMovieDetails } from "../hooks/getMovieDetails";
 import { Loader } from "../shared/components";
 import { BookmarkIcon } from "../shared/icons";
-import { colors } from "../theme";
+import { colors, breakpoints } from "../theme";
 
 const ImageContainer = styled.div`
   display: flex;
   justify-content: center;
+
+  @media (max-width: ${breakpoints.tab}) {
+    width: 450px;
+    margin: 0 auto;
+  }
+
+  @media (max-width: ${breakpoints.mobile}) {
+    width: 300px;
+    flex-direction: column;
+  }
 `;
 
 const Image = styled.img`
   width: 250px;
   border-radius: 5px;
+
+  @media (max-width: ${breakpoints.tab}) {
+    width: 200px;
+  }
+
+  @media (max-width: ${breakpoints.mobile}) {
+    align-self: center;
+  }
 `;
 
 const TitleContainer = styled.div`
@@ -22,6 +40,10 @@ const TitleContainer = styled.div`
   flex-direction: column;
   margin-left: 20px;
   width: 350px;
+
+  @media (max-width: ${breakpoints.mobile}) {
+    width: unset;
+  }
 `;
 
 const SaveButton = styled.button`
@@ -40,6 +62,11 @@ const SaveButton = styled.button`
   align-items: center;
   gap: 5px;
   margin-left: auto;
+
+  @media (max-width: ${breakpoints.mobile}) {
+    margin-right: auto;
+    margin-top: 10px;
+  }
 `;
 
 const TitleInfoContainer = styled.div`
@@ -81,6 +108,14 @@ const Plot = styled.div`
   color: ${colors.secondaryMain};
   border-bottom: 1px solid ${colors.softText};
   padding: 15px 0;
+
+  @media (max-width: ${breakpoints.tab}) {
+    width: 450px;
+  }
+
+  @media (max-width: ${breakpoints.mobile}) {
+    width: 300px;
+  }
 `;
 
 const OtherInfo = styled.div`
@@ -88,6 +123,15 @@ const OtherInfo = styled.div`
   margin: 25px auto;
   display: flex;
   color: ${colors.secondaryMain};
+
+  @media (max-width: ${breakpoints.tab}) {
+    width: 450px;
+  }
+
+  @media (max-width: ${breakpoints.mobile}) {
+    width: 300px;
+    padding-bottom: 25px;
+  }
 `;
 
 const InfoBox = styled.div`
@@ -121,7 +165,24 @@ const MovieDetailsEmpty = styled.div`
   text-align: center;
 `;
 
-const MovieDetails = ({ selectedMovie, updateWatchList, watchList }) => {
+const GoBack = styled.div`
+  display: none;
+
+  @media (max-width: ${breakpoints.mobile}) {
+    display: block;
+    margin-bottom: 20px;
+    font-weight: 500;
+    text-decoration: underline;
+    margin-left: 5px;
+  }
+`;
+
+const MovieDetails = ({
+  selectedMovie,
+  updateWatchList,
+  watchList,
+  setShowDetails,
+}) => {
   const { isLoading, error, data } = getMovieDetails({ id: selectedMovie });
   const isBookmarked = !!watchList[data?.imdbID];
   const handleBookmark = (id) => {
@@ -130,6 +191,7 @@ const MovieDetails = ({ selectedMovie, updateWatchList, watchList }) => {
 
   return (
     <>
+      <GoBack onClick={() => setShowDetails(false)}>Go to list...</GoBack>
       {isLoading && <StyledLoader isLoading />}
       {error && (
         <MovieListError>Error Loading Movie Details....</MovieListError>
@@ -186,6 +248,7 @@ MovieDetails.propTypes = {
   selectedMovie: PropTypes.string,
   updateWatchList: PropTypes.func,
   watchList: PropTypes.object,
+  setShowDetails: PropTypes.func,
 };
 
 export { MovieDetails };
