@@ -6,9 +6,10 @@ export const colors = {
   textMain: "#5C5C5C",
   selectedBackground: "#EBEBEB",
   colorBlack: "#000",
+  colorBlue: "#2196f3",
 };
 
 export const breakpoints = {
-  tab: "996px",
-  mobile: "680px",
+  tab: "930px",
+  mobile: "638px",
 };

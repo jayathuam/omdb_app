@@ -1,7 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 import styled from "@emotion/styled";
+
 import { colors, breakpoints } from "../theme";
+import placeholderImage from "../shared/img/placeholder.png";
 
 const MovieCardWrapper = styled.div`
   width: 300px;
@@ -40,13 +42,25 @@ const MoviePoster = styled.img`
   border-radius: 5px;
 `;
 
+/**
+ * This is use to render brief details of a movie in search result
+ * @param {string} image : banner url of the movie, if url value is equal to N/A then static placeholder image will be displayed
+ * @param {string} title :title fo the movie
+ * @param {string} year: released year of the movie
+ * @param {string} imdbId: unique identifier for a movie
+ * @param {string} selectedId: id of the movie displayed in movie details container. This will be used to change the bg color of selected movie list item
+ * @param {func} onClick: function to trigger when click on the movie list item
+ */
 const MovieCard = ({ imageUrl, title, year, imdbId, selectedId, onClick }) => {
+  const image = imageUrl !== "N/A" ? imageUrl : placeholderImage;
+
   return (
     <MovieCardWrapper
       selected={selectedId === imdbId}
       onClick={() => onClick(imdbId)}
+      role="listitem"
     >
-      <MoviePoster src={imageUrl} alt={title} />
+      <MoviePoster src={image} alt={title} />
       <div>
         <MovieTitle>{title}</MovieTitle>
         <MovieYear>{year}</MovieYear>

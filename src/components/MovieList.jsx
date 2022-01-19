@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import styled from "@emotion/styled";
 
 import { FilterContext } from "../contexts/FilterContext";
-import { getMovieList } from "../hooks/getMovieList";
+import { useMovieList } from "../hooks/useMovieList";
 import { MovieCard } from "./MovieCard";
 import { Loader } from "../shared/components";
 import { colors, breakpoints } from "../theme";
@@ -51,17 +51,23 @@ const StyledLoader = styled(Loader)`
   margin-top: 25px;
 `;
 
+/**
+ * Render search results as list of items
+ * @param {string} selectedMovie: selected movie to render details on the movie details container
+ * @param {func} setSelectedMovie: state changing function for set the selected movie. this will be passed to the onClick prop in MovieCard component.
+ */
 const MovieList = ({ selectedMovie, setSelectedMovie }) => {
   const { filters } = useContext(FilterContext);
   const { min, max } = filters.year;
 
   const { isLoading, error, data, fetchNextPage, hasNextPage, isFetching } =
-    getMovieList({
+    useMovieList({
       year: `${min}-${max}`,
       type: filters.type,
       search: filters.search,
     });
 
+  // function to handle the infinite behavior of the search results
   const handleScroll = (e) => {
     const bottom =
       e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight;
@@ -71,7 +77,7 @@ const MovieList = ({ selectedMovie, setSelectedMovie }) => {
   };
 
   return (
-    <MovieListWrapper onScroll={handleScroll}>
+    <MovieListWrapper onScroll={handleScroll} role="list" tabIndex={0}>
       {!!data?.pages["0"].data.totalResults && (
         <ResultText>{`${data?.pages["0"].data.totalResults} Results (${min}-${max})`}</ResultText>
       )}

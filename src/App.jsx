@@ -3,11 +3,13 @@ import React, { useState } from "react";
 import { Header } from "./components/Header";
 import { Content } from "./components/Content";
 import { FilterContext } from "./contexts/FilterContext";
+import { defaultMaxYear, defaultMinYear } from "./config";
 
 function App() {
+  // initial status of the filters and the search string
   const [filters, setFilters] = useState({
     search: "",
-    year: { min: 1970, max: 2001 },
+    year: { min: defaultMinYear, max: defaultMaxYear },
     type: "",
   });
 

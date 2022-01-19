@@ -1,8 +1,10 @@
 import axios from "axios";
 
+import { omdbApiKey, omdbUrl } from "../config";
+
 export default axios.create({
-  baseURL: "http://www.omdbapi.com/",
+  baseURL: omdbUrl,
   params: {
-    apikey: "f9c6e99f",
+    apikey: omdbApiKey,
   },
 });

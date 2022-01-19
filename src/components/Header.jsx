@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "@emotion/styled";
+
 import { Search } from "./Search";
 import { Filters } from "./Filters";
 import { colors, breakpoints } from "../theme";
@@ -34,7 +35,7 @@ const StyledSearch = styled(Search)`
 
 const Header = () => {
   return (
-    <Wrapper>
+    <Wrapper role="search">
       <StyledSearch />
       <Filters />
     </Wrapper>

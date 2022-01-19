@@ -4,6 +4,7 @@ import debounce from "lodash.debounce";
 
 import { FilterContext } from "../contexts/FilterContext";
 import { LenseIcon } from "../shared/icons";
+import { searchDebounceTime } from "../config";
 import { colors, breakpoints } from "../theme";
 
 const SearchWrapper = styled.div`
@@ -33,11 +34,11 @@ const StyledInput = styled.input`
 
 const Search = ({ ...rest }) => {
   const { filters, setFilters } = useContext(FilterContext);
+
+  // handle the onChange event of the search input debounce time will be 300 ms
   const handleOnChange = debounce((text) => {
-    if (text) {
-      setFilters({ ...filters, search: text });
-    }
-  }, 300);
+    setFilters({ ...filters, search: text });
+  }, searchDebounceTime);
 
   return (
     <SearchWrapper {...rest}>
@@ -45,6 +46,7 @@ const Search = ({ ...rest }) => {
       <StyledInput
         placeholder="Search movie here"
         onChange={(e) => handleOnChange(e.target.value)}
+        aria-label="search movies here"
       />
     </SearchWrapper>
   );

@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import styled from "@emotion/styled";
+
 import { colors } from "../../theme";
 
 const StyledLoader = styled.span`

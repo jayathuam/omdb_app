@@ -2,43 +2,55 @@ import React from "react";
 import PropTypes from "prop-types";
 import styled from "@emotion/styled";
 
-import { colors, breakpoints } from "../../theme";
+import { colors } from "../../theme";
 
 const RadioWrapper = styled.div`
-  display: flex;
+  display: block;
+  position: relative;
+  padding-left: 20px;
   cursor: pointer;
   user-select: none;
   align-items: center;
+
+  span:after {
+    top: 5px;
+    left: 5px;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: white;
+  }
 `;
 
-const OuterCircle = styled.div`
-  width: 12px;
-  height: 12px;
-  min-width: 12px;
-  min-height: 12px;
-  border: 2px solid ${colors.secondaryText};
+const StyledRadio = styled.input`
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+
+  :checked ~ span {
+    background-color: ${colors.colorBlue};
+  }
+
+  :checked ~ span:after {
+    display: block;
+  }
+`;
+
+const Checkmark = styled.span`
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 15px;
+  width: 15px;
+  background-color: ${colors.softText};
   border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-right: 5px;
-  transition: all 0.1s linear;
-`;
 
-const InnerCircle = styled.div`
-  width: ${({ unselected }) => (unselected ? "0px;" : "8px")};
-  height: ${({ unselected }) => (unselected ? "0px;" : "8px")};
-  border-radius: 50%;
-  background-color: ${colors.secondaryText};
-  transition: all 0.1s linear;
-`;
-
-const HelpText = styled.div`
-  color: ${colors.secondaryText};
-  padding-right: 20px;
-
-  @media (max-width: ${breakpoints.mobile}) {
-    padding-right: 10px;
+  :after {
+    content: "";
+    position: absolute;
+    display: none;
   }
 `;
 
@@ -50,10 +62,15 @@ const Radio = ({ selected, onChange, text, value, ...rest }) => {
         onChange(value);
       }}
     >
-      <OuterCircle>
-        <InnerCircle unselected={value !== selected} />
-      </OuterCircle>
-      <HelpText>{text}</HelpText>
+      {text}
+      <StyledRadio
+        type="radio"
+        readOnly
+        checked={selected === value}
+        aria-checked={selected === value}
+        aria-label={`${text} movie type`}
+      ></StyledRadio>
+      <Checkmark></Checkmark>
     </RadioWrapper>
   );
 };

@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import styled from "@emotion/styled";
 
 import { MovieList } from "./MovieList";
 import { MovieDetails } from "./MovieDetails";
 import { getData, saveData } from "../utils/localStorage";
+import { FilterContext } from "../contexts/FilterContext";
 import { colors, breakpoints } from "../theme";
 
 const Wrapper = styled.div`
@@ -48,6 +49,12 @@ const Content = () => {
   const [selectedMovie, setSelectedMovie] = useState("");
   const [watchList, setWatchList] = useState(getData("watchList"));
   const [showDetails, setShowDetails] = useState(false);
+  const { filters } = useContext(FilterContext);
+
+  useEffect(() => {
+    setShowDetails(false);
+    setSelectedMovie("");
+  }, [filters]);
 
   const updateSelectedMovie = (id) => {
     setSelectedMovie(id);

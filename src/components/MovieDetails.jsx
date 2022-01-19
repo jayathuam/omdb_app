@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import styled from "@emotion/styled";
 
-import { getMovieDetails } from "../hooks/getMovieDetails";
+import { useMovieDetails } from "../hooks/useMovieDetails";
 import { Loader } from "../shared/components";
 import { BookmarkIcon } from "../shared/icons";
 import { colors, breakpoints } from "../theme";
@@ -177,21 +177,33 @@ const GoBack = styled.div`
   }
 `;
 
+/**
+ * Use to render details regarding a selected movie from the movie search result
+ * @param {string} selectedMovie: movie id to get the details of the selected movie
+ * @param {func} updateWatchList: function to update the watch list on local storage
+ * @param {object} watchList: object containing data of the watch list movies
+ * @param {func} setShowDetails: function to set the state to go back for movie search results in mobile view
+ */
 const MovieDetails = ({
   selectedMovie,
   updateWatchList,
   watchList,
   setShowDetails,
 }) => {
-  const { isLoading, error, data } = getMovieDetails({ id: selectedMovie });
+  const { isLoading, error, data } = useMovieDetails({ id: selectedMovie });
   const isBookmarked = !!watchList[data?.imdbID];
   const handleBookmark = (id) => {
     updateWatchList({ id, value: !isBookmarked });
   };
 
+  const placeHolderImage =
+    "https://via.placeholder.com/250X360.png?text=no%20image";
+
   return (
     <>
-      <GoBack onClick={() => setShowDetails(false)}>Go to list...</GoBack>
+      <GoBack onClick={() => setShowDetails(false)} role="link" tabIndex={0}>
+        Go to list...
+      </GoBack>
       {isLoading && <StyledLoader isLoading />}
       {error && (
         <MovieListError>Error Loading Movie Details....</MovieListError>
@@ -202,11 +214,16 @@ const MovieDetails = ({
       {data && (
         <>
           <ImageContainer>
-            <Image src={data.Poster} alt={data.Title} />
+            <Image
+              src={data.Poster !== "N/A" ? data.Poster : placeHolderImage}
+              alt={data.Title}
+              tabIndex={0}
+            />
             <TitleContainer>
               <SaveButton
                 onClick={() => handleBookmark(data.imdbID)}
                 isBookmarked={isBookmarked}
+                aria-label="add movie to watch list"
               >
                 <BookmarkIcon
                   width={20}
@@ -229,7 +246,11 @@ const MovieDetails = ({
               </TitleInfoContainer>
             </TitleContainer>
           </ImageContainer>
-          <Plot>{data.Plot}</Plot>
+          {data.Plot !== "N/A" && (
+            <Plot tabIndex={0} aria-label={`plot of the movie. ${data.Plot}`}>
+              {data.Plot}
+            </Plot>
+          )}
           <OtherInfo>
             {data.Ratings.map((item) => (
               <InfoBox key={item.Source}>

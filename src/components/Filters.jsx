@@ -30,6 +30,7 @@ const StyledLabel = styled.label`
 
 const RadioGroup = styled.div`
   display: flex;
+  gap: 10px;
 `;
 
 const Filters = ({ ...rest }) => {
@@ -55,7 +56,7 @@ const Filters = ({ ...rest }) => {
       </div>
       <div>
         <StyledLabel>Type</StyledLabel>
-        <RadioGroup>
+        <RadioGroup role="radiogroup" aria-label="select movie type">
           <Radio
             value=""
             selected={filters.type}
