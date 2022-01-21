@@ -201,10 +201,13 @@ const MovieDetails = ({
 
   return (
     <>
-      <GoBack onClick={() => setShowDetails(false)} role="link" tabIndex={0}>
-        Go to list...
-      </GoBack>
-      {isLoading && <StyledLoader isLoading />}
+      {!isLoading && (
+        <GoBack onClick={() => setShowDetails(false)} role="link" tabIndex={0}>
+          Go to list...
+        </GoBack>
+      )}
+
+      {isLoading && <StyledLoader isLoading data-testid="loader" />}
       {error && (
         <MovieListError>Error Loading Movie Details....</MovieListError>
       )}

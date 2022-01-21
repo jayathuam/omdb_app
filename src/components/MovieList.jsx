@@ -78,7 +78,7 @@ const MovieList = ({ selectedMovie, setSelectedMovie }) => {
 
   return (
     <MovieListWrapper onScroll={handleScroll} role="list" tabIndex={0}>
-      {!!data?.pages["0"].data.totalResults && (
+      {!!data?.pages[0].data.totalResults && (
         <ResultText>{`${data?.pages["0"].data.totalResults} Results (${min}-${max})`}</ResultText>
       )}
       {!isLoading &&
@@ -95,13 +95,15 @@ const MovieList = ({ selectedMovie, setSelectedMovie }) => {
             />
           ))
         )}
-      {!data?.pages["0"].data.totalResults && !isLoading && (
+      {!data?.pages[0].data.totalResults && !isLoading && (
         <MovieListEmpty>
           List is Empty. Please type a valid movie name.
         </MovieListEmpty>
       )}
       {error && <MovieListError>Error Loading Movie List</MovieListError>}
-      {(isLoading || isFetching) && <StyledLoader isLoading />}
+      {(isLoading || isFetching) && (
+        <StyledLoader isLoading data-testid="loader" />
+      )}
     </MovieListWrapper>
   );
 };
