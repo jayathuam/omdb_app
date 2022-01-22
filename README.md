@@ -8,7 +8,7 @@ Install dependencies
 ```sh
 $ npm install
 ```
-How to run development server(http://server:4000)
+How to run development server(http://server:3000)
 ```sh
 $ npm start
 ```
@@ -23,7 +23,7 @@ Install dependencies
 ```sh
 $ yarn
 ```
-How to run development server(http://server:4000)
+How to run development server(http://server:3000)
 ```sh
 $ yarn start
 ```
