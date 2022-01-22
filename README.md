@@ -1,70 +1,56 @@
-# Getting Started with Create React App
+# Aligent Case Study
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+### Setup
 
-## Available Scripts
+Using good old `NPM`
 
-In the project directory, you can run:
+Install dependencies
+```sh
+$ npm install
+```
+How to run development server(http://server:4000)
+```sh
+$ npm start
+```
+How to run unit tests
+```sh
+$ npm test
+```
 
-### `npm start`
+Using `Yarn`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Install dependencies
+```sh
+$ yarn
+```
+How to run development server(http://server:4000)
+```sh
+$ yarn start
+```
+How to run unit tests
+```sh
+$ yarn test
+```
+### High Level solution and decisions
+* Built on top of the React js. Used create-react-app as the boiler plate.
+* Use [Emotion](https://emotion.sh/docs/introduction) to create styled components. This library was selected to maintain the simplicity and much easier to change styles based on the props.
+* Use [React query](https://react-query.tanstack.com/overview) for data fetching management. This library is supporting caching, synchronizing and updating server state, support both GraphQL and REST APIs and many more.
+* [Axios](https://www.npmjs.com/package/axios) for access the backend API.
+* [Lodash Debounce](https://www.npmjs.com/package/lodash.debounce) for debounce the search input text. Default value 300ms.
+* [React Input Range](https://www.npmjs.com/package/react-input-range) for year selector.
+* [React Testing library](https://www.npmjs.com/package/react-input-range) for unit testing.
+* [Eslint](https://eslint.org/) for code linting.
+* `src/config.js` file for global configurations.
+* `Local Storage` for save the watch list of the movies.
+*  Added few `aria-labels` and `tab-indexes` to increase the Accessability.
+* Web application is responsive to support mobile and tab devices.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+### What I can improve further
+*   At the moment OMDB api is not supporting for year intervals. So that feature is not working correctly in the UI. Hence year selection feature need to be revamped. 
+*   100% unit tests.
+*   Increase the code comments.
+*   Improve Accessability attributes.
+*   Improve data caching.
+*   Improve UI/UX
+*   Improve watch list feature.(Proposing a new page to manage watch list)
+*   Offline support if there is a requirement.
